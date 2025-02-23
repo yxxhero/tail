@@ -1,21 +1,18 @@
 name: ci
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   test-build:
     strategy:
       matrix:
-        go-version: [1.23.x, 1.22.x, 1.21.x]
-        # os: [ubuntu-22.04, macos-latest, windows-latest]
-        # remove windows for now
         os: [ubuntu-22.04, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
-        go-version: ${{ matrix.go-version }}
+        go-version-file: "go.mod" 
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
           fetch-depth: 0
     - name: Test
